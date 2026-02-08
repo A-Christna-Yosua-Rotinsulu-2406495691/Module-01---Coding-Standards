@@ -27,6 +27,7 @@
                         <th scope="col">Product ID</th>
                         <th scope="col">Product Name</th>
                         <th scope="col">Quantity</th>
+                        <th scope="col">Actions</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -45,6 +46,13 @@
                                   th:text="${product.productQuantity}">
                                     0
                                 </span>
+                        </td>
+                        <td>
+                            <!-- Edit Button -->
+                            <a th:href="@{'/product/edit/' + ${product.productId}}"
+                               class="btn btn-sm btn-warning" title="Edit Product">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
                         </td>
                     </tr>
                     </tbody>
