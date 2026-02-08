@@ -51,4 +51,13 @@ public class ProductController {
         service.update(product);
         return "redirect:/product/list";
     }
+
+    @PostMapping("/delete")
+    public String deleteProduct(@RequestParam("productId") String productId, Model model) {
+        boolean deleted = service.delete(productId);
+        if (!deleted) {
+            model.addAttribute("errorMessage", "Product not found!");
+        }
+        return "redirect:/product/list";
+    }
 }
