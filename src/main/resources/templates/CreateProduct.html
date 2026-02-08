@@ -14,20 +14,25 @@
     <div class="card">
         <div class="card-body">
             <form th:action="@{/product/create}" th:object="${product}" method="post">
+                <!-- Product Name -->
                 <div class="form-group">
-                    <label for="nameInput" class="font-weight-bold">Product Name</label>
+                    <label for="productName" class="font-weight-bold">Product Name</label>
                     <input th:field="*{productName}" type="text" class="form-control mb-3"
-                           id="nameInput" placeholder="Enter product name" required>
+                           id="productName" placeholder="Enter product name" required>
                     <small class="form-text text-muted">Enter the name of your product</small>
                 </div>
 
+                <!-- Product Quantity -->
                 <div class="form-group">
-                    <label for="quantityInput" class="font-weight-bold">Quantity</label>
+                    <label for="productQuantity" class="font-weight-bold">Quantity</label>
                     <input th:field="*{productQuantity}" type="number" class="form-control mb-3"
-                           id="quantityInput" placeholder="Enter quantity" min="0" required>
+                           id="productQuantity" placeholder="Enter quantity" min="0" required>
                     <small class="form-text text-muted">Enter the available quantity</small>
                 </div>
 
+                <!-- Note: productId tidak ditampilkan karena akan di-generate oleh sistem -->
+
+                <!-- Buttons -->
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary mr-2">
                         <i class="fas fa-save"></i> Submit
