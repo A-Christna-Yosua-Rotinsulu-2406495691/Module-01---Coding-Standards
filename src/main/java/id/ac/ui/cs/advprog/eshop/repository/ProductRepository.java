@@ -36,6 +36,10 @@ public class ProductRepository {
     }
 
     public Product update(Product updatedProduct) {
+        if (updatedProduct == null || updatedProduct.getProductId() == null) {
+            return null;
+        }
+
         for (int i = 0; i < productData.size(); i++) {
             Product product = productData.get(i);
             if (product.getProductId().equals(updatedProduct.getProductId())) {
