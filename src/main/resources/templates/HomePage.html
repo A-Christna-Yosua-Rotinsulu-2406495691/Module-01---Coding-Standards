@@ -10,8 +10,13 @@
 <div class="container text-center mt-5">
   <div class="jumbotron">
     <h1 class="display-4">Welcome to ADV Shop</h1>
-    <h3 class="mb-4">Your E-Commerce Solution</h3>
-    <p class="lead">Manage your products efficiently with our advanced shop management system</p>
+
+    <!-- INI yang dibaca oleh Selenium test -->
+    <h3 class="mb-4">Welcome</h3>
+
+    <p class="lead">
+      Manage your products efficiently with our advanced shop management system
+    </p>
     <hr class="my-4">
 
     <div class="row mt-5">
@@ -21,7 +26,9 @@
             <i class="fas fa-list fa-3x text-primary mb-3"></i>
             <h5 class="card-title">View Products</h5>
             <p class="card-text">Browse and manage all your products in one place</p>
-            <a th:href="@{/product/list}" class="btn btn-outline-primary">Go to Products</a>
+            <a th:href="@{/product/list}" class="btn btn-outline-primary">
+              Go to Products
+            </a>
           </div>
         </div>
       </div>
@@ -32,7 +39,9 @@
             <i class="fas fa-plus-circle fa-3x text-success mb-3"></i>
             <h5 class="card-title">Add Product</h5>
             <p class="card-text">Create new products for your inventory</p>
-            <a th:href="@{/product/create}" class="btn btn-outline-success">Create Product</a>
+            <a th:href="@{/product/create}" class="btn btn-outline-success">
+              Create Product
+            </a>
           </div>
         </div>
       </div>
@@ -40,7 +49,8 @@
 
     <div class="mt-5">
       <a th:href="@{/product/list}" class="btn btn-primary btn-lg mr-3">
-        <i class="fas fa-shopping-cart"></i> Start Managing Products
+        <i class="fas fa-shopping-cart"></i>
+        Start Managing Products
       </a>
     </div>
   </div>
