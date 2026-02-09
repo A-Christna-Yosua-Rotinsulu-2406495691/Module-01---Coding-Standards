@@ -17,9 +17,14 @@ class ProductRepositoryTest {
     @InjectMocks
     ProductRepository productRepository;
 
+    private Product product;
+
     @BeforeEach
     void setup() {
-        // Tidak perlu setup khusus jika ProductRepository tidak butuh dependency
+        // Setup product untuk test
+        product = new Product();
+        product.setProductName("Sampo Cap Bambang");
+        product.setProductQuantity(100);
     }
 
     @Test
@@ -70,5 +75,64 @@ class ProductRepositoryTest {
         assertEquals(product2.getProductId(), savedProduct.getProductId());
 
         assertFalse(productIterator.hasNext());
+    }
+
+    @Test
+    void testUpdateProduct_positiveScenario() {
+        // Create product
+        Product created = productRepository.create(product);
+        String productId = created.getProductId();
+
+        // Update the product
+        Product updatedProduct = new Product();
+        updatedProduct.setProductId(productId);
+        updatedProduct.setProductName("Sampo Cap Bango (Updated)");
+        updatedProduct.setProductQuantity(150);
+
+        Product result = productRepository.update(updatedProduct);
+
+        // Verify update successful
+        assertNotNull(result);
+        assertEquals("Sampo Cap Bango (Updated)", result.getProductName());
+        assertEquals(150, result.getProductQuantity());
+
+        // Verify in findAll
+        Product found = productRepository.findById(productId);
+        assertNotNull(found);
+        assertEquals("Sampo Cap Bango (Updated)", found.getProductName());
+    }
+
+    @Test
+    void testUpdateProduct_negativeScenario_notFound() {
+        // Try to update non-existent product
+        Product nonExistentProduct = new Product();
+        nonExistentProduct.setProductId("non-existent-id");
+        nonExistentProduct.setProductName("Ghost Product");
+        nonExistentProduct.setProductQuantity(999);
+
+        // Act
+        Product result = productRepository.update(nonExistentProduct);
+
+        // Assert: Should return null
+        assertNull(result);
+    }
+
+    @Test
+    void testUpdateProduct_withNullValues() {
+        // Create product
+        Product created = productRepository.create(product);
+        String productId = created.getProductId();
+
+        // Try to update with null product
+        Product result = productRepository.update(null);
+
+        // Should return null
+        assertNull(result, "Update with null product should return null");
+
+        // Original product should still exist and unchanged
+        Product original = productRepository.findById(productId);
+        assertNotNull(original, "Original product should still exist");
+        assertEquals("Sampo Cap Bambang", original.getProductName());
+        assertEquals(100, original.getProductQuantity());
     }
 }
