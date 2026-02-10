@@ -65,5 +65,20 @@ Pemisahan tersebut diharapkan dapat memastikan perubahan di satu lapisan tidak m
    Spring Security menyediakan proteksi CSRF secara default
 </p>
 
+<h3 style="color:yellow">
+    Area Kerentanan yang Ditemukan
+</h3>
+
+<p>
+Selama mengerjakan tutorial modul 1 ini, saya menemukan beberapa area yang belum saya implementasikan secure code sehingga menimbulkan kerentanan untuk aplikasi yang telah saya buat. Beberapa area yang saya maksud adalah sebagai berikut:
+
+1. <b style="color:cyan">Kurangnya Validasi Input</b> pada `ProductRepository.java`, khususnya pada method `create()` di mana saya menerima semua input yang dimasukkan oleh user tanpa perlu melakukan validasi ataupun sanitasi lebih lanjut.
+
+2. <b style="color:cyan">Penanganan Error</b> yang saya lakukan belum sepenuhnya "baik" untuk umpan balik pengguna, di mana saya mengembalikan `null` pada method `findById()` sehingga ketika product yang diberikan action oleh pengguna dan tidak ditemukan di database akan memberikan sebuah kegagalan secara diam-diam. Walaupun, dalam praktik yang telah saya lakukan, belum ada kasus tertentu yang dapat menyebabkan "error" tersebut.
+
+3. <b style="color:cyan">Tidak Ada Impelementasi Logging</b> di mana hal ini penting untuk memudahkan proses debugging atau monitoring lebih lanjut sebagaimana telah diperkenalkan dalam pertemuan kelas sebelumnya.
+</p>
+
+
 
 
