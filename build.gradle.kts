@@ -2,6 +2,7 @@ plugins {
     java
     id("org.springframework.boot") version "3.2.2"
     id("io.spring.dependency-management") version "1.1.7"
+    id("jacoco")
 }
 
 group = "id.ac.ui.cs.advprog"
@@ -71,4 +72,19 @@ tasks.register<Test>("functionalTest") {
 
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
+}
+
+tasks.test {
+    filter {
+        excludeTestsMatching("*FunctionalTest")
+    }
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+    reports {
+        html.required.set(true)
+        xml.required.set(false)
+        csv.required.set(false)
+    }
 }
