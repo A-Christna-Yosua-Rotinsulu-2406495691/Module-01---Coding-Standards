@@ -3,6 +3,7 @@ plugins {
     id("org.springframework.boot") version "3.2.2"
     id("io.spring.dependency-management") version "1.1.7"
     id("jacoco")
+    pmd
 }
 
 group = "id.ac.ui.cs.advprog"
@@ -23,6 +24,12 @@ configurations {
 
 repositories {
     mavenCentral()
+}
+
+pmd {
+    toolVersion = "7.0.0-rc4"
+    rulesMinimumPriority.set(5)
+    ruleSets = listOf("category/java/bestpractices.xml")
 }
 
 val seleniumJavaVersion = "4.14.1"
