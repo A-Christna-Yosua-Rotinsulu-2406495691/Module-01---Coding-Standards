@@ -86,6 +86,7 @@ tasks.test {
     filter {
         excludeTestsMatching("*FunctionalTest")
     }
+    finalizedBy(tasks.jacocoTestReport)
 }
 
 tasks.jacocoTestReport {
