@@ -17,15 +17,21 @@ java {
     }
 }
 
+/* ================= CONFIGURATIONS ================= */
+
 configurations {
     compileOnly {
         extendsFrom(configurations.annotationProcessor.get())
     }
 }
 
+/* ================= REPOSITORIES ================= */
+
 repositories {
     mavenCentral()
 }
+
+/* ================= SONAR ================= */
 
 sonar {
     properties {
@@ -39,57 +45,66 @@ sonar {
     }
 }
 
+/* ================= PMD ================= */
+
 pmd {
     toolVersion = "7.0.0-rc4"
     rulesMinimumPriority.set(5)
     ruleSets = listOf("category/java/bestpractices.xml")
 }
 
+/* ================= VERSIONS ================= */
+
 val seleniumJavaVersion = "4.14.1"
 val seleniumJupiterVersion = "5.0.1"
 val webdrivermanagerVersion = "5.6.3"
-val junitJupiterVersion = "5.9.1"
+
+/* ================= DEPENDENCIES ================= */
 
 dependencies {
+
+    // ===== MAIN APPLICATION =====
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.boot:spring-boot-starter-web")
 
-    compileOnly("org.projectlombok:lombok")
+    // ===== DEVELOPMENT =====
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 
-    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+    // ===== LOMBOK =====
+    compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
+    // ===== TESTING =====
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 
+    // Selenium / Functional Test
     testImplementation("org.seleniumhq.selenium:selenium-java:$seleniumJavaVersion")
     testImplementation("io.github.bonigarcia:selenium-jupiter:$seleniumJupiterVersion")
     testImplementation("io.github.bonigarcia:webdrivermanager:$webdrivermanagerVersion")
 
-    testImplementation("org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-
-    testImplementation("org.mockito:mockito-core")
+    // Mockito (optional, but explicit)
     testImplementation("org.mockito:mockito-junit-jupiter")
 }
+
+/* ================= TEST TASKS ================= */
 
 tasks.register<Test>("unitTest") {
     description = "Runs unit tests."
     group = "verification"
+    useJUnitPlatform()
     filter {
         excludeTestsMatching("*FunctionalTest")
     }
-    useJUnitPlatform()
 }
 
 tasks.register<Test>("functionalTest") {
     description = "Runs functional tests."
     group = "verification"
+    useJUnitPlatform()
     filter {
         includeTestsMatching("*FunctionalTest")
     }
-    useJUnitPlatform()
 }
 
 tasks.withType<Test>().configureEach {
@@ -103,6 +118,8 @@ tasks.test {
     finalizedBy(tasks.jacocoTestReport)
 }
 
+/* ================= JACOCO ================= */
+
 tasks.jacocoTestReport {
     dependsOn(tasks.test)
     reports {
@@ -111,6 +128,8 @@ tasks.jacocoTestReport {
         csv.required.set(false)
     }
 }
+
+/* ================= PMD TASK ================= */
 
 tasks.withType<Pmd>().configureEach {
     ignoreFailures = true

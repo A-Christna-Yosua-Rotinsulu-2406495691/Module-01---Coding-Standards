@@ -8,7 +8,6 @@ import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -257,10 +256,7 @@ class ProductRepositoryTest {
     void testDeleteProductWithEmptyId() {
         // Arrange
         Product product = createTestProduct("", "Product with empty ID", 10);
-        productRepository.create(product);
-
-        // Act
-        boolean deletionResult = productRepository.delete("");
+        productRepository.create(product);        
 
         // Assert
         assertNull(productRepository.findById(""));

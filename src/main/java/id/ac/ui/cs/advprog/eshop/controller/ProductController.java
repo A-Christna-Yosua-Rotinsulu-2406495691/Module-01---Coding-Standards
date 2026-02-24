@@ -2,7 +2,6 @@ package id.ac.ui.cs.advprog.eshop.controller;
 
 import id.ac.ui.cs.advprog.eshop.model.Product;
 import id.ac.ui.cs.advprog.eshop.service.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,8 +12,12 @@ import java.util.List;
 @RequestMapping("/product")
 public class ProductController {
 
-    @Autowired
-    private ProductService service;
+    private final ProductService service;
+
+    // Constructor Injection (BEST PRACTICE)
+    public ProductController(ProductService service) {
+        this.service = service;
+    }
 
     @GetMapping("/create")
     public String createProductPage(Model model) {
@@ -24,7 +27,7 @@ public class ProductController {
     }
 
     @PostMapping("/create")
-    public String createProductPost(@ModelAttribute Product product, Model model) {
+    public String createProductPost(@ModelAttribute Product product) {
         service.create(product);
         return "redirect:/product/list";
     }
@@ -39,25 +42,32 @@ public class ProductController {
     @GetMapping("/edit/{id}")
     public String editProductPage(@PathVariable("id") String id, Model model) {
         Product product = service.findById(id);
+
         if (product == null) {
             return "redirect:/product/list";
         }
+
         model.addAttribute("product", product);
         return "editProduct";
     }
 
     @PostMapping("/edit")
-    public String editProductPost(@ModelAttribute Product product, Model model) {
+    public String editProductPost(@ModelAttribute Product product) {
         service.update(product);
         return "redirect:/product/list";
     }
 
     @PostMapping("/delete")
-    public String deleteProduct(@RequestParam("productId") String productId, Model model) {
+    public String deleteProduct(
+            @RequestParam("productId") String productId,
+            Model model) {
+
         boolean deleted = service.delete(productId);
+
         if (!deleted) {
             model.addAttribute("errorMessage", "Product not found!");
         }
+
         return "redirect:/product/list";
     }
 }
