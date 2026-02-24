@@ -35,8 +35,7 @@ sonar {
         property(
             "sonar.coverage.jacoco.xmlReportPaths",
             "${layout.buildDirectory.get()}/reports/jacoco/test/jacocoTestReport.xml"
-        )
-        property("sonar.sources", listOf("src/main/java", "src/main/resources"))
+        )        
     }
 }
 
