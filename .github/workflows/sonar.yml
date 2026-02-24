@@ -9,9 +9,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Source 
-        uses: actions/checkout@v4 
-        with: 
+      - name: Checkout Source
+        uses: actions/checkout@v4
+        with:
           fetch-depth: 0
 
       - name: Set up JDK 21
@@ -23,10 +23,12 @@ jobs:
       - name: Give execute permission
         run: chmod +x gradlew
 
-      - name: Build + PMD + Sonar + Execute Gradle Tasks
+      - name: Test + Coverage + Sonar Analysis
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: ./gradlew test
-             ./gradlew jacocoTestReport
-             ./gradlew sonar --info
+        run: |
+          ./gradlew test
+          ./gradlew jacocoTestReport
+          ./gradlew sonar --info
+
