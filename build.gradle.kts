@@ -28,7 +28,6 @@ repositories {
 }
 
 sonar {
-    // Token
     properties {
         property("sonar.projectKey", "A-Christna-Yosua-Rotinsulu-2406495691_Module-01---Coding-Standards")
         property("sonar.organization", "module2cicd")
