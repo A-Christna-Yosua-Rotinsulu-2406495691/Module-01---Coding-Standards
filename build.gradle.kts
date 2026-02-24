@@ -4,7 +4,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.4"
     id("jacoco")
     pmd
-    id("org.sonarqube") version "7.2.2.6593"
+    id("org.sonarqube") version "4.4.1.3373"
 }
 
 group = "id.ac.ui.cs.advprog"
@@ -32,7 +32,10 @@ sonar {
         property("sonar.projectKey", "A-Christna-Yosua-Rotinsulu-2406495691_Module-01---Coding-Standards")
         property("sonar.organization", "module2cicd")
         property("sonar.host.url", "https://sonarcloud.io")
-        property("sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/test/jacocoTestReport.xml")
+        property(
+            "sonar.coverage.jacoco.xmlReportPaths",
+            "${layout.buildDirectory.get()}/reports/jacoco/test/jacocoTestReport.xml"
+        )
     }
 }
 
