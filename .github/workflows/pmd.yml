@@ -1,6 +1,8 @@
 name: PMD Code Analysis
 
-on: push
+on:
+  push:
+  pull_request:
 
 permissions:
   contents: read
@@ -8,12 +10,18 @@ permissions:
 jobs:
   pmd:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/checkout@v4
+
       - name: Set up JDK 21
-        uses: actions/setup-java@99b8673ff64fbf99d15d7b37b7895e378dcb3ecc
+        uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
-          java-version: '21'
+          distribution: temurin
+          java-version: 21
+
+      - name: Give execute permission to gradlew
+        run: chmod +x gradlew
+
       - name: Run PMD
-        run: ./gradlew pmdMain
+        run: ./gradlew pmdMain --info
