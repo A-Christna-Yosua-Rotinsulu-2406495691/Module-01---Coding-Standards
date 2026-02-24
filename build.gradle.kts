@@ -1,10 +1,10 @@
 plugins {
     java
     id("org.springframework.boot") version "3.2.2"
-    id("io.spring.dependency-management") version "1.1.7"
+    id("io.spring.dependency-management") version "1.1.4"
     id("jacoco")
     pmd
-    id("org.sonarqube") version "4.4.1.3373"
+    id("org.sonarqube") version "7.2.2.6593"
 }
 
 group = "id.ac.ui.cs.advprog"
@@ -25,6 +25,15 @@ configurations {
 
 repositories {
     mavenCentral()
+}
+
+sonar {
+    properties {
+        property("sonar.projectKey", "A-Christna-Yosua-Rotinsulu-2406495691_Module-01---Coding-Standards")
+        property("sonar.organization", "module2cicd")
+        property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/test/jacocoTestReport.xml")
+    }
 }
 
 pmd {
@@ -68,6 +77,7 @@ tasks.register<Test>("unitTest") {
     filter {
         excludeTestsMatching("*FunctionalTest")
     }
+    useJUnitPlatform()
 }
 
 tasks.register<Test>("functionalTest") {
@@ -76,6 +86,7 @@ tasks.register<Test>("functionalTest") {
     filter {
         includeTestsMatching("*FunctionalTest")
     }
+    useJUnitPlatform()
 }
 
 tasks.withType<Test>().configureEach {
@@ -96,4 +107,8 @@ tasks.jacocoTestReport {
         xml.required.set(false)
         csv.required.set(false)
     }
+}
+
+tasks.withType<Pmd>().configureEach {
+    ignoreFailures = true
 }

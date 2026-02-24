@@ -16,7 +16,6 @@ jobs:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
       - name: Build and analyze
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        env:      
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: ./gradlew build sonar --info
